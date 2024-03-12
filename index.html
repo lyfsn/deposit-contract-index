@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Converter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        input, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 10px;
+        }
+        input {
+            width: calc(100% - 24px);
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hex to Little Endian Converter</h2>
+        <input id="hexInput" type="text" placeholder="Enter hex string">
+        <button onclick="convertAndDisplay()">Convert</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function littleEndianToNumber(hexString) {
+            const byteArray = hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+            const bigEndianArray = byteArray.reverse();
+            const bigEndianHexString = bigEndianArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return parseInt(bigEndianHexString, 16);
+        }
+
+        function convertAndDisplay() {
+            const hexString = document.getElementById('hexInput').value;
+            const result = littleEndianToNumber(hexString);
+            document.getElementById('result').innerText = 'Result: ' + result;
+        }
+    </script>
+</body>
+</html>
